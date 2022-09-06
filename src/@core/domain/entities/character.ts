@@ -1,13 +1,12 @@
+import { v4 as uuid } from 'uuid';
 import { Ally } from '../value-objects/ally';
 import { ArmorClass } from '../value-objects/armor-class';
 import { Caracteristic } from '../value-objects/caracteristic';
 import { Equipament } from '../value-objects/equipament';
-import { HitPoint } from '../value-objects/hit-point';
 import { Modifier } from '../value-objects/modifier';
 import { Name } from '../value-objects/name';
 import { SaveThrows } from '../value-objects/save-throws';
 import { Skill } from '../value-objects/skill';
-import { Speed } from '../value-objects/speed';
 import { Spell } from '../value-objects/spell';
 import { Treasure } from '../value-objects/treasure';
 
@@ -23,11 +22,9 @@ export class Character {
   skills: Skill[];
   spells: Spell[];
   defect: string;
-  inspiration: string;
+  inspiration: number;
   armorClass: ArmorClass;
   initiative: number;
-  speed: Speed;
-  hitPoints: HitPoint;
   proeficiencyBonus: number;
   savingThrows: SaveThrows;
   allies: Ally[];
@@ -37,43 +34,35 @@ export class Character {
     id,
     playerId,
     name,
-    level,
     caracteristic,
-    equipaments,
     wealth,
     modifier,
     skills,
-    spells,
     defect,
-    inspiration,
     armorClass,
-    initiative,
-    speed,
-    hitPoints,
-    proeficiencyBonus,
-    savingThrows,
-    allies,
-    treasures,
+    d20,
   ) {
-    this.id = id;
+    this.id = id ?? uuid();
     this.playerId = playerId;
     this.name = name;
-    this.level = level;
+    this.level = 1;
     this.caracteristic = caracteristic;
-    this.equipaments = equipaments;
     this.wealth = wealth;
     this.modifier = modifier;
     this.skills = skills;
-    this.spells = spells;
     this.defect = defect;
-    this.inspiration = inspiration;
+    this.inspiration = 0;
     this.armorClass = armorClass;
-    this.initiative = initiative;
-    this.speed = speed;
-    this.hitPoints = hitPoints;
-    this.proeficiencyBonus = proeficiencyBonus;
-    this.savingThrows = savingThrows;
-    this.allies = allies;
-    this.treasures = treasures;
+    this.proeficiencyBonus = 0;
+    this.calculateInitiative(modifier.dexterity, d20);
+    //this.savingThrows = savingThrows; modificador + bonus da classe
+  }
+
+  levelUp() {
+    this.level += 1;
+  }
+
+  private calculateInitiative(dexterity: number, d20: number) {
+    this.initiative = dexterity + d20;
   }
 }
