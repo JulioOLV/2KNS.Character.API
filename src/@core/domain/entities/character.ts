@@ -32,4 +32,48 @@ export class Character {
   savingThrows: SaveThrows;
   allies: Ally[];
   treasures: Treasure[];
+
+  constructor(
+    id,
+    playerId,
+    name,
+    level,
+    caracteristic,
+    equipaments,
+    wealth,
+    modifier,
+    skills,
+    spells,
+    defect,
+    inspiration,
+    armorClass,
+    initiative,
+    speed,
+    hitPoints,
+    proeficiencyBonus,
+    savingThrows,
+    allies,
+    treasures,
+  ) {
+    this.id = id;
+    this.playerId = playerId;
+    this.name = name;
+    this.level = level;
+    this.caracteristic = caracteristic;
+    this.equipaments = equipaments;
+    this.wealth = wealth;
+    this.modifier = modifier;
+    this.skills = skills;
+    this.spells = spells;
+    this.defect = defect;
+    this.inspiration = inspiration;
+    this.armorClass = armorClass;
+    this.initiative = initiative;
+    this.speed = speed;
+    this.hitPoints = hitPoints;
+    this.proeficiencyBonus = proeficiencyBonus;
+    this.savingThrows = savingThrows;
+    this.allies = allies;
+    this.treasures = treasures;
+  }
 }
