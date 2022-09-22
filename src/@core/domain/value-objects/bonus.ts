@@ -1,8 +1,10 @@
+import { EnumAttribute } from "../enums/enum-attribute";
+
 export class Bonus {
-  attribute: string;
+  attribute: EnumAttribute;
   value: number;
 
-  constructor(attribute, value) {
+  constructor(attribute : EnumAttribute, value : number) {
     this.attribute = attribute;
     this.value = value;
   }

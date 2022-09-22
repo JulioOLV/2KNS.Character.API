@@ -1,5 +1,7 @@
+import { EnumRaces } from '../enums/enum-races';
+
 export class Caracteristic {
-  race: string;
+  race: EnumRaces;
   class: string;
   antecedent: string;
   alignment: string;
@@ -12,17 +14,17 @@ export class Caracteristic {
   secoundaryLanguage: string;
 
   constructor(
-    race,
-    classCharacter,
-    antecedent,
-    alignment,
-    age,
-    height,
-    weight,
-    eyes,
-    skin,
-    hair,
-    secondaryLanguage,
+    race : EnumRaces,
+    classCharacter : string,
+    antecedent : string,
+    alignment : string,
+    age : number,
+    height : number,
+    weight : number,
+    eyes : string,
+    skin : string,
+    hair : string,
+    secondaryLanguage : string,
   ) {
     this.race = race;
     this.class = classCharacter;
