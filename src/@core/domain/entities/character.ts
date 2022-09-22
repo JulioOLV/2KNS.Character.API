@@ -1,4 +1,5 @@
 import { v4 as uuid } from 'uuid';
+import { BaseRace } from '../rules/races/base/base-race';
 import { Ally } from '../value-objects/ally';
 import { ArmorClass } from '../value-objects/armor-class';
 import { Caracteristic } from '../value-objects/caracteristic';
@@ -11,6 +12,8 @@ import { Skill } from '../value-objects/skill';
 import { Speed } from '../value-objects/speed';
 import { Spell } from '../value-objects/spell';
 import { Treasure } from '../value-objects/treasure';
+import { Dwarf } from '../rules/races/dwarf';
+import { EnumRaces } from '../enums/enum-races';
 
 export class Character {
   private _id: string;
@@ -115,15 +118,15 @@ export class Character {
   }
 
   constructor(
-    id,
-    playerId,
-    name,
-    caracteristic,
-    wealth,
-    modifier,
-    skills,
-    defect,
-    armorClass,
+    id : string,
+    playerId : string,
+    name : Name,
+    caracteristic : Caracteristic,
+    wealth : number,
+    modifier : Modifier,
+    skills : Skill[],
+    defect : string,
+    armorClass : ArmorClass,
     d20: number,
   ) {
     this._id = id ?? uuid();
@@ -140,6 +143,7 @@ export class Character {
     this._proeficiencyBonus = 0;
     this.calculateInitiative(d20);
     this.calculateSavingThrows();
+    this.calculateSpeed();
   }
 
   levelUp() {
@@ -184,8 +188,8 @@ export class Character {
   }
 
   calculateSpeed() {
-    //TODO: calcular a partir da raça
-    this._speed = new Speed(30, 'ft');
+    const race : BaseRace = (this._caracteristic.race === EnumRaces.DWARF) ? new Dwarf() : null;
+    this._speed = new Speed(race.displacement, 'ft');
   }
 
   calculateSavingThrows() {
