@@ -1,9 +1,10 @@
+import { EnumRaces } from "../../../enums/enum-races";
 import { Bonus } from "../../../value-objects/bonus";
 import { Height } from "../../../value-objects/height";
 import { Names } from "../../../value-objects/names";
 
 export class BaseRace {
-  private _name: string;
+  private _name: EnumRaces;
   private _bonus: Bonus[];
   private _maxAge: number;
   private _height: Height;
@@ -34,7 +35,7 @@ export class BaseRace {
     return this._names;
   }
 
-  constructor(name: string, bonus: Bonus[], maxAge: number, height: Height, displacement: number, names: Names[]) {
+  constructor(name: EnumRaces, bonus: Bonus[], maxAge: number, height: Height, displacement: number, names: Names[]) {
     this._name = name;
     this._bonus = bonus;
     this._maxAge = maxAge;
