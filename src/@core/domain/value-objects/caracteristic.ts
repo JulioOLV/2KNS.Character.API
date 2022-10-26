@@ -14,17 +14,17 @@ export class Caracteristic {
   secoundaryLanguage: string;
 
   constructor(
-    race : EnumRaces,
-    classCharacter : string,
-    antecedent : string,
-    alignment : string,
-    age : number,
-    height : number,
-    weight : number,
-    eyes : string,
-    skin : string,
-    hair : string,
-    secondaryLanguage : string,
+    race: EnumRaces,
+    classCharacter: string,
+    antecedent: string,
+    alignment: string,
+    age: number,
+    height: number,
+    weight: number,
+    eyes: string,
+    skin: string,
+    hair: string,
+    secondaryLanguage: string,
   ) {
     this.race = race;
     this.class = classCharacter;

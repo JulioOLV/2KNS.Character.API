@@ -37,96 +37,96 @@ export class Character {
   private _allies: Ally[];
   private _treasures: Treasure[];
 
-  public get id() : string {
+  public get id(): string {
     return this._id;
   }
 
-  public get playerId() : string {
+  public get playerId(): string {
     return this._playerId;
   }
 
-  public get name() : Name {
+  public get name(): Name {
     return this._name;
   }
 
-  public get level() : number {
+  public get level(): number {
     return this._level;
   }
 
-  public get caracteristic() : Caracteristic {
+  public get caracteristic(): Caracteristic {
     return this._caracteristic;
   }
 
-  public get equipaments() : Equipament[] {
+  public get equipaments(): Equipament[] {
     return this._equipaments;
   }
 
-  public get wealth() : number {
+  public get wealth(): number {
     return this._wealth;
   }
 
-  public get modifier() : Modifier {
+  public get modifier(): Modifier {
     return this._modifier;
   }
 
-  public get hitPoints() : HitPoint {
+  public get hitPoints(): HitPoint {
     return this._hitPoints;
   }
 
-  public get speed() : Speed {
+  public get speed(): Speed {
     return this._speed;
   }
 
-  public get skills() : Skill[] {
+  public get skills(): Skill[] {
     return this._skills;
   }
 
-  public get spells() : Spell[] {
+  public get spells(): Spell[] {
     return this._spells;
   }
 
-  public get defect() : string {
+  public get defect(): string {
     return this._defect;
   }
 
-  public get inspiration() : number {
+  public get inspiration(): number {
     return this._inspiration;
   }
 
-  public get armorClass() : ArmorClass {
+  public get armorClass(): ArmorClass {
     return this._armorClass;
   }
 
-  public get initiative() : number {
+  public get initiative(): number {
     return this._initiative;
   }
 
-  public get proeficiencyBonus() : number {
+  public get proeficiencyBonus(): number {
     return this._proeficiencyBonus;
   }
 
-  public get savingThrows() : SaveThrows {
+  public get savingThrows(): SaveThrows {
     return this._savingThrows;
   }
 
-  public get allies() : Ally[] {
+  public get allies(): Ally[] {
     return this._allies;
   }
 
-  public get treasures() : Treasure[] {
+  public get treasures(): Treasure[] {
     return this._treasures;
   }
 
   constructor(
-    id : string,
-    playerId : string,
-    name : Name,
-    caracteristic : Caracteristic,
-    wealth : number,
-    modifier : Modifier,
-    skills : Skill[],
-    defect : string,
-    armorClass : ArmorClass,
+    id: string,
+    playerId: string,
+    name: Name,
+    caracteristic: Caracteristic,
+    wealth: number,
+    modifier: Modifier,
+    skills: Skill[],
+    defect: string,
+    armorClass: ArmorClass,
     d20: number,
   ) {
     this._id = id ?? uuid();
@@ -188,7 +188,8 @@ export class Character {
   }
 
   calculateSpeed() {
-    const race : BaseRace = (this._caracteristic.race === EnumRaces.DWARF) ? new Dwarf() : null;
+    const race: BaseRace =
+      this._caracteristic.race === EnumRaces.DWARF ? new Dwarf() : null;
     this._speed = new Speed(race.displacement, 'ft');
   }
 

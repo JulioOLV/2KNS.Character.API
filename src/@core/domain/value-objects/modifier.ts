@@ -6,7 +6,14 @@ export class Modifier {
   wisdom: number;
   charisma: number;
 
-  constructor(strength: number, dexterity: number, constitution: number, intelligence: number, wisdom: number, charisma: number) {
+  constructor(
+    strength: number,
+    dexterity: number,
+    constitution: number,
+    intelligence: number,
+    wisdom: number,
+    charisma: number,
+  ) {
     this.strength = strength;
     this.dexterity = dexterity;
     this.constitution = constitution;
