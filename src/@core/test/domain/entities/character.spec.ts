@@ -11,27 +11,89 @@ describe('Character tests', () => {
     const character = new Character(
       faker.datatype.uuid(),
       faker.datatype.uuid(),
-      new Name('John', 'Doe', 'test'),
+      new Name(
+        faker.name.firstName(),
+        faker.name.lastName(),
+        faker.name.lastName(),
+      ),
       new Caracteristic(
         EnumRaces.DWARF,
-        'test',
-        'test',
-        'test',
-        100,
-        1.4,
-        30,
-        'test',
-        'test',
-        'test',
-        'test',
+        faker.random.words(),
+        faker.random.words(),
+        faker.random.words(),
+        faker.datatype.number(500),
+        faker.datatype.number({ min: 0.5, max: 2, precision: 0.01 }),
+        faker.datatype.number(100),
+        faker.random.words(),
+        faker.random.words(),
+        faker.random.words(),
+        faker.random.words(),
       ),
       faker.datatype.number(),
-      new Modifier(0, 0, 0, 0, 0, 0),
+      new Modifier(
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+      ),
       [],
       faker.datatype.string(),
-      new ArmorClass(0, 0, 0, 0, 0),
+      new ArmorClass(
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+      ),
       faker.datatype.number(),
     );
     expect(character).toBeDefined();
+  });
+
+  it('test', () => {
+    const character = new Character(
+      faker.datatype.uuid(),
+      faker.datatype.uuid(),
+      new Name(
+        faker.name.firstName(),
+        faker.name.lastName(),
+        faker.name.lastName(),
+      ),
+      new Caracteristic(
+        EnumRaces.DWARF,
+        null,
+        faker.random.words(),
+        faker.random.words(),
+        faker.datatype.number({ min: 400 }),
+        faker.datatype.number(110),
+        faker.datatype.number(100),
+        faker.random.words(),
+        faker.random.words(),
+        faker.random.words(),
+        faker.random.words(),
+      ),
+      faker.datatype.number(),
+      new Modifier(
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+      ),
+      [],
+      faker.datatype.string(),
+      new ArmorClass(
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+        faker.datatype.number({ min: 1, max: 20 }),
+      ),
+      faker.datatype.number(),
+    );
+    expect(character.caracteristic.validationEntity.isValid).toBeFalsy();
   });
 });
