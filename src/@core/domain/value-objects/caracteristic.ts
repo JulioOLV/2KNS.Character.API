@@ -1,4 +1,6 @@
 import { EnumRaces } from '../enums/enum-races';
+import { EntityValidation } from '../util/entity-validation';
+import { CaracteristicValidation } from '../validations/caracteristic-validation';
 
 export class Caracteristic {
   race: EnumRaces;
@@ -12,6 +14,7 @@ export class Caracteristic {
   skin: string;
   hair: string;
   secoundaryLanguage: string;
+  validationEntity: EntityValidation;
 
   constructor(
     race: EnumRaces,
@@ -37,5 +40,18 @@ export class Caracteristic {
     this.skin = skin;
     this.hair = hair;
     this.secoundaryLanguage = secondaryLanguage;
+
+    this.validate();
+  }
+
+  private validate() {
+    const validator = new CaracteristicValidation();
+    const validatorResult = validator.validate(this);
+    if (Object.keys(validatorResult).length > 0) {
+      this.validationEntity = new EntityValidation(
+        !validatorResult,
+        validatorResult,
+      );
+    }
   }
 }
