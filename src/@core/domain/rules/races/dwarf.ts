@@ -8,9 +8,9 @@ import { BaseRace } from './base/base-race';
 
 const NAME: EnumRaces = EnumRaces.DWARF;
 const BONUS: Bonus[] = [new Bonus(EnumAttribute.CONSTITUTION, 2)];
-const MAX_AGE: number = 350;
+const MAX_AGE = 350;
 const HEIGHT: Height = new Height(90, 120);
-const DISPLACEMENT: number = 9;
+const DISPLACEMENT = 9;
 const NAMES: Names[] = [
   new Names(EnumTypeNames.MASC, [
     'Adrik',
