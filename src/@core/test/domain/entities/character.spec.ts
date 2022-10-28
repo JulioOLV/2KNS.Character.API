@@ -51,49 +51,4 @@ describe('Character tests', () => {
     );
     expect(character).toBeDefined();
   });
-
-  it('test', () => {
-    const character = new Character(
-      faker.datatype.uuid(),
-      faker.datatype.uuid(),
-      new Name(
-        faker.name.firstName(),
-        faker.name.lastName(),
-        faker.name.lastName(),
-      ),
-      new Caracteristic(
-        EnumRaces.DWARF,
-        null,
-        faker.random.words(),
-        faker.random.words(),
-        faker.datatype.number({ min: 400 }),
-        faker.datatype.number(110),
-        faker.datatype.number(100),
-        faker.random.words(),
-        faker.random.words(),
-        faker.random.words(),
-        faker.random.words(),
-      ),
-      faker.datatype.number(),
-      new Modifier(
-        faker.datatype.number({ min: 1, max: 20 }),
-        faker.datatype.number({ min: 1, max: 20 }),
-        faker.datatype.number({ min: 1, max: 20 }),
-        faker.datatype.number({ min: 1, max: 20 }),
-        faker.datatype.number({ min: 1, max: 20 }),
-        faker.datatype.number({ min: 1, max: 20 }),
-      ),
-      [],
-      faker.datatype.string(),
-      new ArmorClass(
-        faker.datatype.number({ min: 1, max: 20 }),
-        faker.datatype.number({ min: 1, max: 20 }),
-        faker.datatype.number({ min: 1, max: 20 }),
-        faker.datatype.number({ min: 1, max: 20 }),
-        faker.datatype.number({ min: 1, max: 20 }),
-      ),
-      faker.datatype.number(),
-    );
-    expect(character.caracteristic.validationEntity.isValid).toBeFalsy();
-  });
 });
