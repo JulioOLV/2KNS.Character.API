@@ -47,6 +47,7 @@ export class Caracteristic {
   private validate() {
     const validator = new CaracteristicValidation();
     const validatorResult = validator.validate(this);
+    this.validationEntity = new EntityValidation(true, {});
     if (Object.keys(validatorResult).length > 0) {
       this.validationEntity = new EntityValidation(
         !validatorResult,
