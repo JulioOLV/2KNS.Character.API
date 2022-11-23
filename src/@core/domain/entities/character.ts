@@ -14,6 +14,8 @@ import { Spell } from '../value-objects/spell';
 import { Treasure } from '../value-objects/treasure';
 import { Dwarf } from '../rules/races/dwarf';
 import { EnumRaces } from '../enums/enum-races';
+import { CaracteristicValidation } from '../validations/caracteristic-validation';
+import { EntityValidation } from '../util/entity-validation';
 
 export class Character {
   private _id: string;
@@ -36,6 +38,7 @@ export class Character {
   private _savingThrows: SaveThrows;
   private _allies: Ally[];
   private _treasures: Treasure[];
+  validationEntity: EntityValidation;
 
   public get id(): string {
     return this._id;
@@ -144,6 +147,8 @@ export class Character {
     this.calculateInitiative(d20);
     this.calculateSavingThrows();
     this.calculateSpeed();
+
+    this.validate();
   }
 
   levelUp() {
@@ -203,5 +208,17 @@ export class Character {
       this._modifier.wisdom,
       this._modifier.charisma,
     );
+  }
+
+  private validate() {
+    const validator = new CaracteristicValidation();
+    const validatorResult = validator.validate(this._caracteristic);
+    this.validationEntity = new EntityValidation(true, {});
+    if (Object.keys(validatorResult).length > 0) {
+      this.validationEntity = new EntityValidation(
+        !validatorResult,
+        validatorResult,
+      );
+    }
   }
 }
