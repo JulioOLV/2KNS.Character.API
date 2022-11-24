@@ -71,9 +71,13 @@ describe('Character tests', () => {
     invalidMockCaracteristic.age = age;
     const mockCharacter = character(invalidMockCaracteristic);
 
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Caracteristic',
+    );
+
     expect(mockCharacter.caracteristic.age).toBe(age);
-    expect(mockCharacter.validationEntity.isValid).toBeFalsy();
-    expect(mockCharacter.validationEntity.result).toHaveProperty('age');
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('age');
   });
 
   it('should heigth is not valid (max)', () => {
@@ -82,9 +86,13 @@ describe('Character tests', () => {
     invalidMockCaracteristic.height = height;
     const mockCharacter = character(invalidMockCaracteristic);
 
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Caracteristic',
+    );
+
     expect(mockCharacter.caracteristic.height).toBe(height);
-    expect(mockCharacter.validationEntity.isValid).toBeFalsy();
-    expect(mockCharacter.validationEntity.result).toHaveProperty('height');
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('height');
   });
 
   it('should heigth is not valid (min)', () => {
@@ -93,9 +101,13 @@ describe('Character tests', () => {
     invalidMockCaracteristic.height = height;
     const mockCharacter = character(invalidMockCaracteristic);
 
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Caracteristic',
+    );
+
     expect(mockCharacter.caracteristic.height).toBe(height);
-    expect(mockCharacter.validationEntity.isValid).toBeFalsy();
-    expect(mockCharacter.validationEntity.result).toHaveProperty('height');
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('height');
   });
 
   it('should class is not valid', () => {
@@ -104,9 +116,13 @@ describe('Character tests', () => {
     invalidMockCaracteristic.class = class_;
     const mockCharacter = character(invalidMockCaracteristic);
 
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Caracteristic',
+    );
+
     expect(mockCharacter.caracteristic.class).toBe(class_);
-    expect(mockCharacter.validationEntity.isValid).toBeFalsy();
-    expect(mockCharacter.validationEntity.result).toHaveProperty('class');
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('class');
   });
 
   it('should weight is not valid', () => {
@@ -115,9 +131,13 @@ describe('Character tests', () => {
     invalidMockCaracteristic.weight = weight;
     const mockCharacter = character(invalidMockCaracteristic);
 
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Caracteristic',
+    );
+
     expect(mockCharacter.caracteristic.weight).toBe(weight);
-    expect(mockCharacter.validationEntity.isValid).toBeFalsy();
-    expect(mockCharacter.validationEntity.result).toHaveProperty('weight');
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('weight');
   });
 
   it('should secoundaryLanguage is not valid', () => {
@@ -126,12 +146,14 @@ describe('Character tests', () => {
     invalidMockCaracteristic.secoundaryLanguage = secoundaryLanguage;
     const mockCharacter = character(invalidMockCaracteristic);
 
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Caracteristic',
+    );
+
     expect(mockCharacter.caracteristic.secoundaryLanguage).toBe(
       secoundaryLanguage,
     );
-    expect(mockCharacter.validationEntity.isValid).toBeFalsy();
-    expect(mockCharacter.validationEntity.result).toHaveProperty(
-      'secoundaryLanguage',
-    );
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('secoundaryLanguage');
   });
 });
