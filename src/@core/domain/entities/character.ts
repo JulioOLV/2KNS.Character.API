@@ -38,7 +38,7 @@ export class Character {
   private _savingThrows: SaveThrows;
   private _allies: Ally[];
   private _treasures: Treasure[];
-  validationEntity: EntityValidation;
+  validationEntity: EntityValidation[] = [];
 
   public get id(): string {
     return this._id;
@@ -148,7 +148,7 @@ export class Character {
     this.calculateSavingThrows();
     this.calculateSpeed();
 
-    this.validate();
+    this.caracteristicValidate();
   }
 
   levelUp() {
@@ -210,14 +210,16 @@ export class Character {
     );
   }
 
-  private validate() {
+  private caracteristicValidate() {
     const validator = new CaracteristicValidation();
     const validatorResult = validator.validate(this._caracteristic);
-    this.validationEntity = new EntityValidation(true, {});
     if (Object.keys(validatorResult).length > 0) {
-      this.validationEntity = new EntityValidation(
-        !validatorResult,
-        validatorResult,
+      this.validationEntity.push(
+        new EntityValidation(
+          !validatorResult,
+          validatorResult,
+          'Caracteristic',
+        ),
       );
     }
   }
