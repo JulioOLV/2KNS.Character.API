@@ -1,4 +1,4 @@
-export class Treasure {
+export interface Treasure {
   name: string;
   description: string;
   value: number;

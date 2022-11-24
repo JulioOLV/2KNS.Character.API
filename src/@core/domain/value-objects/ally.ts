@@ -1,4 +1,4 @@
-export class Ally {
+export interface Ally {
   name: string;
   description: string;
 }

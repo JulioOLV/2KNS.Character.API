@@ -1,4 +1,4 @@
-export class Spell {
+export interface Spell {
   name: string;
   description: string;
   level: number;

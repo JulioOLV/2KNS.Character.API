@@ -189,25 +189,32 @@ export class Character {
 
   calculateHitPoints() {
     //TODO: calcular a partir da classe + raça
-    this._hitPoints = new HitPoint(0, 10, 10);
+    this._hitPoints = {
+      temp: 0,
+      max: 10,
+      current: 10,
+    };
   }
 
   calculateSpeed() {
     const race: BaseRace =
       this._caracteristic.race === EnumRaces.DWARF ? new Dwarf() : null;
-    this._speed = new Speed(race.displacement, 'ft');
+    this._speed = {
+      value: race.displacement,
+      unit: 'ft',
+    };
   }
 
   calculateSavingThrows() {
     //TODO: modificador + bonus da classe
-    this._savingThrows = new SaveThrows(
-      this._modifier.strength,
-      this._modifier.dexterity,
-      this._modifier.constitution,
-      this._modifier.intelligence,
-      this._modifier.wisdom,
-      this._modifier.charisma,
-    );
+    this._savingThrows = {
+      strength: this._modifier.strength,
+      dexterity: this._modifier.dexterity,
+      constitution: this._modifier.constitution,
+      intelligence: this._modifier.intelligence,
+      wisdom: this._modifier.wisdom,
+      charisma: this._modifier.charisma,
+    };
   }
 
   private caracteristicValidate() {
