@@ -1,0 +1,64 @@
+[
+  {
+    "id": 1,
+    "name": "Anão",
+    "bonus": [
+      {
+        "attribute": "Constitution",
+        "value": 2
+      }
+    ],
+    "maxAge": 350,
+    "height": {
+      "min": 1.2,
+      "max": 1.5
+    },
+    "displacement": 7.5,
+    "visionInDark": 18,
+    "subRaces": [
+      {
+        "name": "Anão da Montanha",
+        "bonus": [
+          {
+            "attribute": "Force",
+            "value": 2
+          }
+        ]
+      },
+      {
+        "name": "Anão do Vale",
+        "bonus": [
+          {
+            "attribute": "Wisdom",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "names": [
+      {
+        "type": "masc",
+        "examples": ["Adrik", "Alberich", "Baern", "Barendd",
+        "Brottor", "Bruenor", "Dain", "Darrak", "Delg", "Eberk", "Einkil",
+        "Fargrim", "Flint", "Gardain", "Harbek", "Kildrak", "Morgran",
+        "Orsik", "Oskar", "Rangrim", "Rurik", "Taklinn", "Thoradin",
+        "Thorin", "Tordek", "Traubon", "Travok", "Ulfgar", "Veit",
+        "Vondal"]
+      },
+      {
+        "type": "fem",
+        "examples": ["Amber", "Artin", "Audhild", "Bardryn",
+        "Dagnal", "Diesa", "Eldeth", "Falkrunn", "Gunnloda", "Gurdis",
+        "Helja", "Hlin", "Kathra", "Kristryd", "Ilde", "Liftrasa", "Mardred",
+        "Riswynn", "Sannl", "Torbera", "Torgga", "Vistra"]
+      },
+      {
+        "type": "last",
+        "examples": ["Balderk", "Battlehammer", "Brawnanvil",
+        "Dankil", "Fireforge", "Frostbeard", "Gorunn", "Holderhek",
+        "Ironfist", "Loderr", "Lutgehr", "Rumnaheim", "Strakeln",
+        "Torunn", "Ungart"]
+      }
+    ]
+  }
+]
