@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+import { Equipament } from 'src/@core/domain/value-objects/equipament';
 import { Skill } from 'src/@core/domain/value-objects/skill';
 import { Character } from '../../../domain/entities/character';
 import { EnumRaces } from '../../../domain/enums/enum-races';
@@ -46,17 +47,22 @@ const armorClass: ArmorClass = {
 
 const skills: Skill[] = [];
 
-const character = (caracteristicParam?: Caracteristic): Character =>
+const equipaments: Equipament[] = [];
+
+const character = (
+  caracteristicParam?: Caracteristic,
+  modifierParam?: Modifier,
+): Character =>
   new Character(
-    faker.datatype.uuid(),
     faker.datatype.uuid(),
     name,
     caracteristicParam ?? caracteristic,
     faker.datatype.number(),
-    modifier,
+    modifierParam ?? modifier,
     skills,
     faker.datatype.string(),
     armorClass,
+    equipaments,
     faker.datatype.number(),
   );
 
@@ -65,7 +71,7 @@ describe('Character tests', () => {
     expect(character()).toBeDefined();
   });
 
-  it('should age is not valid', () => {
+  it('should caracteristic age is not valid', () => {
     const invalidMockCaracteristic = caracteristic;
     const age = 1000;
     invalidMockCaracteristic.age = age;
@@ -80,7 +86,7 @@ describe('Character tests', () => {
     expect(validationEntity.result).toHaveProperty('age');
   });
 
-  it('should heigth is not valid (max)', () => {
+  it('should caracteristic heigth is not valid (max)', () => {
     const invalidMockCaracteristic = caracteristic;
     const height = 1000;
     invalidMockCaracteristic.height = height;
@@ -95,7 +101,7 @@ describe('Character tests', () => {
     expect(validationEntity.result).toHaveProperty('height');
   });
 
-  it('should heigth is not valid (min)', () => {
+  it('should caracteristic heigth is not valid (min)', () => {
     const invalidMockCaracteristic = caracteristic;
     const height = 10;
     invalidMockCaracteristic.height = height;
@@ -110,7 +116,7 @@ describe('Character tests', () => {
     expect(validationEntity.result).toHaveProperty('height');
   });
 
-  it('should class is not valid', () => {
+  it('should caracteristic class is not valid', () => {
     const invalidMockCaracteristic = caracteristic;
     const class_ = null;
     invalidMockCaracteristic.class = class_;
@@ -125,7 +131,7 @@ describe('Character tests', () => {
     expect(validationEntity.result).toHaveProperty('class');
   });
 
-  it('should weight is not valid', () => {
+  it('should caracteristic weight is not valid', () => {
     const invalidMockCaracteristic = caracteristic;
     const weight = null;
     invalidMockCaracteristic.weight = weight;
@@ -140,7 +146,7 @@ describe('Character tests', () => {
     expect(validationEntity.result).toHaveProperty('weight');
   });
 
-  it('should secoundaryLanguage is not valid', () => {
+  it('should caracteristic secoundaryLanguage is not valid', () => {
     const invalidMockCaracteristic = caracteristic;
     const secoundaryLanguage = null;
     invalidMockCaracteristic.secoundaryLanguage = secoundaryLanguage;
@@ -155,5 +161,219 @@ describe('Character tests', () => {
     );
     expect(validationEntity.isValid).toBeFalsy();
     expect(validationEntity.result).toHaveProperty('secoundaryLanguage');
+  });
+
+  it('should modifier strength is not be null', () => {
+    const invalidMockModifier = modifier;
+    const strength = null;
+    invalidMockModifier.strength = strength;
+    const mockCharacter = character(null, invalidMockModifier);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Modifier',
+    );
+
+    expect(mockCharacter.modifier.strength).toBe(strength);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('strength');
+    expect(validationEntity.result['strength']).toBe(
+      'Strength should not be null',
+    );
+  });
+
+  it('should modifier strength is not be zero', () => {
+    const invalidMockModifier = modifier;
+    const strength = 0;
+    invalidMockModifier.strength = strength;
+    const mockCharacter = character(null, invalidMockModifier);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Modifier',
+    );
+
+    expect(mockCharacter.modifier.strength).toBe(strength);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('strength');
+    expect(validationEntity.result['strength']).toBe(
+      'Strength should not be less than 0',
+    );
+  });
+
+  it('should modifier dexterity is not be null', () => {
+    const invalidMockModifier = modifier;
+    const dexterity = null;
+    invalidMockModifier.dexterity = dexterity;
+    const mockCharacter = character(null, invalidMockModifier);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Modifier',
+    );
+
+    expect(mockCharacter.modifier.dexterity).toBe(dexterity);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('dexterity');
+    expect(validationEntity.result['dexterity']).toBe(
+      'Dexterity should not be null',
+    );
+  });
+
+  it('should modifier dexterity is not be zero', () => {
+    const invalidMockModifier = modifier;
+    const dexterity = 0;
+    invalidMockModifier.dexterity = dexterity;
+    const mockCharacter = character(null, invalidMockModifier);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Modifier',
+    );
+
+    expect(mockCharacter.modifier.dexterity).toBe(dexterity);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('dexterity');
+    expect(validationEntity.result['dexterity']).toBe(
+      'Dexterity should not be less than 0',
+    );
+  });
+
+  it('should modifier constitution is not be null', () => {
+    const invalidMockModifier = modifier;
+    const constitution = null;
+    invalidMockModifier.constitution = constitution;
+    const mockCharacter = character(null, invalidMockModifier);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Modifier',
+    );
+
+    expect(mockCharacter.modifier.constitution).toBe(constitution);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('constitution');
+    expect(validationEntity.result['constitution']).toBe(
+      'Constitution should not be null',
+    );
+  });
+
+  it('should modifier constitution is not be zero', () => {
+    const invalidMockModifier = modifier;
+    const constitution = 0;
+    invalidMockModifier.constitution = constitution;
+    const mockCharacter = character(null, invalidMockModifier);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Modifier',
+    );
+
+    expect(mockCharacter.modifier.constitution).toBe(constitution);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('constitution');
+    expect(validationEntity.result['constitution']).toBe(
+      'Constitution should not be less than 0',
+    );
+  });
+
+  it('should modifier intelligence is not be null', () => {
+    const invalidMockModifier = modifier;
+    const intelligence = null;
+    invalidMockModifier.intelligence = intelligence;
+    const mockCharacter = character(null, invalidMockModifier);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Modifier',
+    );
+
+    expect(mockCharacter.modifier.intelligence).toBe(intelligence);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('intelligence');
+    expect(validationEntity.result['intelligence']).toBe(
+      'Intelligence should not be null',
+    );
+  });
+
+  it('should modifier intelligence is not be zero', () => {
+    const invalidMockModifier = modifier;
+    const intelligence = 0;
+    invalidMockModifier.intelligence = intelligence;
+    const mockCharacter = character(null, invalidMockModifier);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Modifier',
+    );
+
+    expect(mockCharacter.modifier.intelligence).toBe(intelligence);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('intelligence');
+    expect(validationEntity.result['intelligence']).toBe(
+      'Intelligence should not be less than 0',
+    );
+  });
+
+  it('should modifier wisdom is not be null', () => {
+    const invalidMockModifier = modifier;
+    const wisdom = null;
+    invalidMockModifier.wisdom = wisdom;
+    const mockCharacter = character(null, invalidMockModifier);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Modifier',
+    );
+
+    expect(mockCharacter.modifier.wisdom).toBe(wisdom);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('wisdom');
+    expect(validationEntity.result['wisdom']).toBe('Wisdom should not be null');
+  });
+
+  it('should modifier wisdom is not be zero', () => {
+    const invalidMockModifier = modifier;
+    const wisdom = 0;
+    invalidMockModifier.wisdom = wisdom;
+    const mockCharacter = character(null, invalidMockModifier);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Modifier',
+    );
+
+    expect(mockCharacter.modifier.wisdom).toBe(wisdom);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('wisdom');
+    expect(validationEntity.result['wisdom']).toBe(
+      'Wisdom should not be less than 0',
+    );
+  });
+
+  it('should modifier charisma is not be null', () => {
+    const invalidMockModifier = modifier;
+    const charisma = null;
+    invalidMockModifier.charisma = charisma;
+    const mockCharacter = character(null, invalidMockModifier);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Modifier',
+    );
+
+    expect(mockCharacter.modifier.charisma).toBe(charisma);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('charisma');
+    expect(validationEntity.result['charisma']).toBe(
+      'Charisma should not be null',
+    );
+  });
+
+  it('should modifier charisma is not be zero', () => {
+    const invalidMockModifier = modifier;
+    const charisma = 0;
+    invalidMockModifier.charisma = charisma;
+    const mockCharacter = character(null, invalidMockModifier);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'Modifier',
+    );
+
+    expect(mockCharacter.modifier.charisma).toBe(charisma);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('charisma');
+    expect(validationEntity.result['charisma']).toBe(
+      'Charisma should not be less than 0',
+    );
   });
 });
