@@ -16,6 +16,7 @@ import { Dwarf } from '../rules/races/dwarf';
 import { EnumRaces } from '../enums/enum-races';
 import { CaracteristicValidation } from '../validations/caracteristic-validation';
 import { EntityValidation } from '../util/entity-validation';
+import { ModifierValidation } from '../validations/modifier-validation';
 
 export class Character {
   private _id: string;
@@ -121,7 +122,6 @@ export class Character {
   }
 
   constructor(
-    id: string,
     playerId: string,
     name: Name,
     caracteristic: Caracteristic,
@@ -130,9 +130,10 @@ export class Character {
     skills: Skill[],
     defect: string,
     armorClass: ArmorClass,
+    equipaments: Equipament[],
     d20: number,
   ) {
-    this._id = id ?? uuid();
+    this._id = uuid();
     this._playerId = playerId;
     this._name = name;
     this._level = 1;
@@ -144,11 +145,13 @@ export class Character {
     this._inspiration = 0;
     this._armorClass = armorClass;
     this._proeficiencyBonus = 0;
+    this._equipaments = equipaments;
     this.calculateInitiative(d20);
     this.calculateSavingThrows();
     this.calculateSpeed();
 
     this.caracteristicValidate();
+    this.modifierValidate();
   }
 
   levelUp() {
@@ -227,6 +230,16 @@ export class Character {
           validatorResult,
           'Caracteristic',
         ),
+      );
+    }
+  }
+
+  private modifierValidate() {
+    const validator = new ModifierValidation();
+    const validatorResult = validator.validate(this._modifier);
+    if (Object.keys(validatorResult).length > 0) {
+      this.validationEntity.push(
+        new EntityValidation(!validatorResult, validatorResult, 'Modifier'),
       );
     }
   }
