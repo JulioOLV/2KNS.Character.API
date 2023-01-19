@@ -7,6 +7,7 @@ import { ArmorClass } from '../../../domain/value-objects/armor-class';
 import { Caracteristic } from '../../../domain/value-objects/caracteristic';
 import { Modifier } from '../../../domain/value-objects/modifier';
 import { Name } from '../../../domain/value-objects/name';
+import { Class } from '../../../domain/value-objects/class';
 
 const caracteristic: Caracteristic = {
   race: EnumRaces.DWARF,
@@ -48,6 +49,17 @@ const armorClass: ArmorClass = {
 const skills: Skill[] = [];
 
 const equipaments: Equipament[] = [];
+
+const _class : Class = {
+  name: 'Barbarian',
+  description: 'A fierce warrior of primitive background who can enter a battle rage',
+  hitDice: 1,
+  hitDiceType: 12,
+  primaryAbility: 'Strength',
+  savingThrows: ['Strength', 'Constitution'],
+  armorProficiencies: ['Light', 'Medium', 'Heavy', 'Shields'],
+  weaponProficiencies: ['Simple', 'Martial'],
+};
 
 const character = (
   caracteristicParam?: Caracteristic,
@@ -374,6 +386,88 @@ describe('Character tests', () => {
     expect(validationEntity.result).toHaveProperty('charisma');
     expect(validationEntity.result['charisma']).toBe(
       'Charisma should not be less than 0',
+    );
+  });
+
+  it('should current hit point is not be null', () => {
+    const mockCharacter = character(null, null);
+    const invalidClass = _class;
+    invalidClass.hitDiceType = null;
+    
+    mockCharacter.calculateHitPoints(_class);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'HitPoints',
+    );
+
+    expect(mockCharacter.hitPoints.current).toBe(null);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('current');
+    expect(validationEntity.result['current']).toBe(
+      'Current should not be null',
+    );
+  });
+
+  it('should current hit point is not be zero', () => {
+    const invalidMockModifier = modifier;
+    invalidMockModifier.constitution = 0;
+
+    const mockCharacter = character(null, invalidMockModifier);
+    const invalidClass = _class;
+    invalidClass.hitDiceType = 0;
+    
+    mockCharacter.calculateHitPoints(_class);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'HitPoints',
+    );
+
+    expect(mockCharacter.hitPoints.current).toBe(0);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('current');
+    expect(validationEntity.result['current']).toBe(
+      'Current should not be less than 0',
+    );
+  });
+
+  it('should max hit point is not be null', () => {
+    const mockCharacter = character(null, null);
+    const invalidClass = _class;
+    invalidClass.hitDiceType = null;
+    
+    mockCharacter.calculateHitPoints(_class);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'HitPoints',
+    );
+
+    expect(mockCharacter.hitPoints.current).toBe(null);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('max');
+    expect(validationEntity.result['max']).toBe(
+      'Max should not be null',
+    );
+  });
+
+  it('should max hit point is not be zero', () => {
+    const invalidMockModifier = modifier;
+    invalidMockModifier.constitution = 0;
+
+    const mockCharacter = character(null, invalidMockModifier);
+    const invalidClass = _class;
+    invalidClass.hitDiceType = 0;
+    
+    mockCharacter.calculateHitPoints(_class);
+
+    const validationEntity = mockCharacter.validationEntity.find(
+      (x) => x.objectName === 'HitPoints',
+    );
+
+    expect(mockCharacter.hitPoints.current).toBe(0);
+    expect(validationEntity.isValid).toBeFalsy();
+    expect(validationEntity.result).toHaveProperty('max');
+    expect(validationEntity.result['max']).toBe(
+      'Max should not be less than 0',
     );
   });
 });
