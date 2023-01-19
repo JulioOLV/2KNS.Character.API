@@ -17,6 +17,7 @@ import { EnumRaces } from '../enums/enum-races';
 import { CaracteristicValidation } from '../validations/caracteristic-validation';
 import { EntityValidation } from '../util/entity-validation';
 import { ModifierValidation } from '../validations/modifier-validation';
+import { HitPointValidation } from '../validations/hit-point-validation';
 
 export class Character {
   private _id: string;
@@ -152,6 +153,7 @@ export class Character {
 
     this.caracteristicValidate();
     this.modifierValidate();
+    this.hitPointsValidate();
   }
 
   levelUp() {
@@ -240,6 +242,16 @@ export class Character {
     if (Object.keys(validatorResult).length > 0) {
       this.validationEntity.push(
         new EntityValidation(!validatorResult, validatorResult, 'Modifier'),
+      );
+    }
+  }
+
+  private hitPointsValidate() {
+    const validator = new HitPointValidation();
+    const validatorResult = validator.validate(this._hitPoints);
+    if (Object.keys(validatorResult).length > 0) {
+      this.validationEntity.push(
+        new EntityValidation(!validatorResult, validatorResult, 'HitPoints'),
       );
     }
   }
