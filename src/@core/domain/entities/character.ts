@@ -18,28 +18,29 @@ import { CaracteristicValidation } from '../validations/caracteristic-validation
 import { EntityValidation } from '../util/entity-validation';
 import { ModifierValidation } from '../validations/modifier-validation';
 import { HitPointValidation } from '../validations/hit-point-validation';
+import { Class } from '../value-objects/class';
 
 export class Character {
   private _id: string;
   private _playerId: string;
   private _name: Name;
   private _level: number;
-  private _caracteristic: Caracteristic;
-  private _equipaments: Equipament[];
-  private _wealth: number;
-  private _modifier: Modifier;
-  private _hitPoints: HitPoint;
-  private _speed: Speed;
-  private _skills: Skill[];
-  private _spells: Spell[];
-  private _defect: string;
-  private _inspiration: number;
-  private _armorClass: ArmorClass;
-  private _initiative: number;
-  private _proeficiencyBonus: number;
-  private _savingThrows: SaveThrows;
-  private _allies: Ally[];
-  private _treasures: Treasure[];
+  private _caracteristic?: Caracteristic;
+  private _equipaments?: Equipament[];
+  private _wealth?: number;
+  private _modifier?: Modifier;
+  private _hitPoints?: HitPoint;
+  private _speed?: Speed;
+  private _skills?: Skill[];
+  private _spells?: Spell[];
+  private _defect?: string;
+  private _inspiration?: number;
+  private _armorClass?: ArmorClass;
+  private _initiative?: number;
+  private _proeficiencyBonus?: number;
+  private _savingThrows?: SaveThrows;
+  private _allies?: Ally[];
+  private _treasures?: Treasure[];
   validationEntity: EntityValidation[] = [];
 
   public get id(): string {
@@ -153,7 +154,6 @@ export class Character {
 
     this.caracteristicValidate();
     this.modifierValidate();
-    this.hitPointsValidate();
   }
 
   levelUp() {
@@ -183,22 +183,29 @@ export class Character {
     }
   }
 
-  calculateMaxHitPoints() {
-    // TODO: calcular a partir do dado baseado na classe + modificador de constituição
-    this._hitPoints.max = 10;
-  }
-
   calculateInitiative(d20: number) {
     this._initiative = this._modifier.dexterity + d20;
   }
 
-  calculateHitPoints() {
-    //TODO: calcular a partir da classe + raça
-    this._hitPoints = {
-      temp: 0,
-      max: 10,
-      current: 10,
-    };
+  calculateHitPoints(_class: Class) {
+    if (_class.hitDiceType === null || this._modifier.constitution === null) {
+      this._hitPoints = {
+        temp: 0,
+        max: null,
+        current: null,
+      };
+    }
+    else {
+      const maxHitPoints = _class.hitDiceType + this._modifier.constitution;
+
+      this._hitPoints = {
+        temp: 0,
+        max: maxHitPoints,
+        current: maxHitPoints,
+      };
+    }
+
+    this.hitPointsValidate();
   }
 
   calculateSpeed() {

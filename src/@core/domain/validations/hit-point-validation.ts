@@ -14,9 +14,7 @@ export class HitPointValidation extends Validator<HitPoint> {
       .notNull()
       .withMessage('Current should not be null')
       .must((_, c) => c.current > 0)
-      .withMessage('Current should not be less than 0')
-      .must((_, c) => c.current <= c.max)
-      .withMessage('Current should not be greater than max');
+      .withMessage('Current should not be less than 0');
   }
 
   private validateMax() {
