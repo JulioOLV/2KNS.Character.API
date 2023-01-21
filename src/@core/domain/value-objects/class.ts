@@ -1,3 +1,5 @@
+import { EnumAttribute } from "../enums/enum-attribute";
+
 export interface Class {
   name: string;
   description: string;
@@ -21,4 +23,10 @@ export interface Class {
   martialArts?: number;
   chiPoints?: number;
   displacementWithoutArmor?: number;
+  bonusModifier: BonusModifier[];
+}
+
+export interface BonusModifier {
+  attribute: EnumAttribute;
+  value: number;
 }
