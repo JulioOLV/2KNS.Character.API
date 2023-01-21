@@ -1,5 +1,4 @@
 import { v4 as uuid } from 'uuid';
-import { BaseRace } from '../rules/races/base/base-race';
 import { Ally } from '../value-objects/ally';
 import { ArmorClass } from '../value-objects/armor-class';
 import { Caracteristic } from '../value-objects/caracteristic';
@@ -12,13 +11,13 @@ import { Skill } from '../value-objects/skill';
 import { Speed } from '../value-objects/speed';
 import { Spell } from '../value-objects/spell';
 import { Treasure } from '../value-objects/treasure';
-import { Dwarf } from '../rules/races/dwarf';
-import { EnumRaces } from '../enums/enum-races';
 import { CaracteristicValidation } from '../validations/caracteristic-validation';
 import { EntityValidation } from '../util/entity-validation';
 import { ModifierValidation } from '../validations/modifier-validation';
 import { HitPointValidation } from '../validations/hit-point-validation';
 import { Class } from '../value-objects/class';
+import { EnumAttribute } from '../enums/enum-attribute';
+import { Race } from '../value-objects/race';
 
 export class Character {
   private _id: string;
@@ -126,34 +125,17 @@ export class Character {
   constructor(
     playerId: string,
     name: Name,
-    caracteristic: Caracteristic,
     wealth: number,
-    modifier: Modifier,
-    skills: Skill[],
-    defect: string,
-    armorClass: ArmorClass,
-    equipaments: Equipament[],
-    d20: number,
+    defect: string
   ) {
     this._id = uuid();
     this._playerId = playerId;
     this._name = name;
     this._level = 1;
-    this._caracteristic = caracteristic;
     this._wealth = wealth;
-    this._modifier = modifier;
-    this._skills = skills;
     this._defect = defect;
     this._inspiration = 0;
-    this._armorClass = armorClass;
     this._proeficiencyBonus = 0;
-    this._equipaments = equipaments;
-    this.calculateInitiative(d20);
-    this.calculateSavingThrows();
-    this.calculateSpeed();
-
-    this.caracteristicValidate();
-    this.modifierValidate();
   }
 
   levelUp() {
@@ -208,25 +190,43 @@ export class Character {
     this.hitPointsValidate();
   }
 
-  calculateSpeed() {
-    const race: BaseRace =
-      this._caracteristic.race === EnumRaces.DWARF ? new Dwarf() : null;
+  calculateSpeed(race : Race) {
     this._speed = {
       value: race.displacement,
       unit: 'ft',
     };
   }
 
-  calculateSavingThrows() {
-    //TODO: modificador + bonus da classe
+  calculateSavingThrows(_class: Class) {
+    const STRENGTH = _class.bonusModifier.find(x => x.attribute === EnumAttribute.STRENGTH);
+    const DEXTERITY = _class.bonusModifier.find(x => x.attribute === EnumAttribute.DEXTERITY);
+    const CONSTITUTION = _class.bonusModifier.find(x => x.attribute === EnumAttribute.CONSTITUTION);
+    const INTELLIGENCE = _class.bonusModifier.find(x => x.attribute === EnumAttribute.INTELLIGENCE);
+    const WISDOM = _class.bonusModifier.find(x => x.attribute === EnumAttribute.WISDOM);
+    const CHARISMA = _class.bonusModifier.find(x => x.attribute === EnumAttribute.CHARISMA);
+
     this._savingThrows = {
-      strength: this._modifier.strength,
-      dexterity: this._modifier.dexterity,
-      constitution: this._modifier.constitution,
-      intelligence: this._modifier.intelligence,
-      wisdom: this._modifier.wisdom,
-      charisma: this._modifier.charisma,
+      strength: STRENGTH ? this._modifier.strength + STRENGTH.value : this._modifier.strength,
+      dexterity: DEXTERITY ? this._modifier.dexterity + DEXTERITY.value : this._modifier.dexterity,
+      constitution: CONSTITUTION ? this._modifier.constitution + CONSTITUTION.value : this._modifier.constitution,
+      intelligence: INTELLIGENCE ? this._modifier.intelligence + INTELLIGENCE.value : this._modifier.intelligence,
+      wisdom: WISDOM ? this._modifier.wisdom + WISDOM.value : this._modifier.wisdom,
+      charisma: CHARISMA ? this._modifier.charisma + CHARISMA.value : this._modifier.charisma,
     };
+  }
+
+  createCaracteristic(caracteristic: Caracteristic) {
+    this._caracteristic = {
+      ...caracteristic,
+    };
+    this.caracteristicValidate();
+  }
+
+  createModifier(modifier: Modifier) {
+    this._modifier = {
+      ...modifier,
+    };
+    this.modifierValidate();
   }
 
   private caracteristicValidate() {
