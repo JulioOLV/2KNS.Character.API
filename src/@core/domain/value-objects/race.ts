@@ -10,4 +10,5 @@ export interface Race {
   height: Height,
   displacement: number,
   names: Names[],
+  languages: string[],
 }
