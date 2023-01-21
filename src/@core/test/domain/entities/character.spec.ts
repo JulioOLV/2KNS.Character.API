@@ -1,13 +1,11 @@
 import { faker } from '@faker-js/faker';
-import { Equipament } from 'src/@core/domain/value-objects/equipament';
-import { Skill } from 'src/@core/domain/value-objects/skill';
 import { Character } from '../../../domain/entities/character';
 import { EnumRaces } from '../../../domain/enums/enum-races';
-import { ArmorClass } from '../../../domain/value-objects/armor-class';
 import { Caracteristic } from '../../../domain/value-objects/caracteristic';
 import { Modifier } from '../../../domain/value-objects/modifier';
 import { Name } from '../../../domain/value-objects/name';
 import { Class } from '../../../domain/value-objects/class';
+import { EnumAttribute } from '../../../domain/enums/enum-attribute';
 
 const caracteristic: Caracteristic = {
   race: EnumRaces.DWARF,
@@ -38,18 +36,6 @@ const modifier: Modifier = {
   charisma: faker.datatype.number({ min: 1, max: 20 }),
 };
 
-const armorClass: ArmorClass = {
-  armor: faker.datatype.number({ min: 1, max: 20 }),
-  shield: faker.datatype.number({ min: 1, max: 20 }),
-  naturalArmor: faker.datatype.number({ min: 1, max: 20 }),
-  deflection: faker.datatype.number({ min: 1, max: 20 }),
-  misc: faker.datatype.number({ min: 1, max: 20 }),
-};
-
-const skills: Skill[] = [];
-
-const equipaments: Equipament[] = [];
-
 const _class : Class = {
   name: 'Barbarian',
   description: 'A fierce warrior of primitive background who can enter a battle rage',
@@ -59,23 +45,15 @@ const _class : Class = {
   savingThrows: ['Strength', 'Constitution'],
   armorProficiencies: ['Light', 'Medium', 'Heavy', 'Shields'],
   weaponProficiencies: ['Simple', 'Martial'],
+  bonusModifier: [{ attribute: EnumAttribute.STRENGTH, value: 2 }],
 };
 
-const character = (
-  caracteristicParam?: Caracteristic,
-  modifierParam?: Modifier,
-): Character =>
+const character = (): Character =>
   new Character(
     faker.datatype.uuid(),
     name,
-    caracteristicParam ?? caracteristic,
     faker.datatype.number(),
-    modifierParam ?? modifier,
-    skills,
     faker.datatype.string(),
-    armorClass,
-    equipaments,
-    faker.datatype.number(),
   );
 
 describe('Character tests', () => {
@@ -87,7 +65,9 @@ describe('Character tests', () => {
     const invalidMockCaracteristic = caracteristic;
     const age = 1000;
     invalidMockCaracteristic.age = age;
-    const mockCharacter = character(invalidMockCaracteristic);
+    const mockCharacter = character();
+
+    mockCharacter.createCaracteristic(invalidMockCaracteristic);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Caracteristic',
@@ -102,7 +82,9 @@ describe('Character tests', () => {
     const invalidMockCaracteristic = caracteristic;
     const height = 1000;
     invalidMockCaracteristic.height = height;
-    const mockCharacter = character(invalidMockCaracteristic);
+    const mockCharacter = character();
+
+    mockCharacter.createCaracteristic(invalidMockCaracteristic);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Caracteristic',
@@ -117,7 +99,9 @@ describe('Character tests', () => {
     const invalidMockCaracteristic = caracteristic;
     const height = 10;
     invalidMockCaracteristic.height = height;
-    const mockCharacter = character(invalidMockCaracteristic);
+    const mockCharacter = character();
+
+    mockCharacter.createCaracteristic(invalidMockCaracteristic);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Caracteristic',
@@ -132,7 +116,9 @@ describe('Character tests', () => {
     const invalidMockCaracteristic = caracteristic;
     const class_ = null;
     invalidMockCaracteristic.class = class_;
-    const mockCharacter = character(invalidMockCaracteristic);
+    const mockCharacter = character();
+
+    mockCharacter.createCaracteristic(invalidMockCaracteristic);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Caracteristic',
@@ -147,7 +133,9 @@ describe('Character tests', () => {
     const invalidMockCaracteristic = caracteristic;
     const weight = null;
     invalidMockCaracteristic.weight = weight;
-    const mockCharacter = character(invalidMockCaracteristic);
+    const mockCharacter = character();
+
+    mockCharacter.createCaracteristic(invalidMockCaracteristic);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Caracteristic',
@@ -162,7 +150,9 @@ describe('Character tests', () => {
     const invalidMockCaracteristic = caracteristic;
     const secoundaryLanguage = null;
     invalidMockCaracteristic.secoundaryLanguage = secoundaryLanguage;
-    const mockCharacter = character(invalidMockCaracteristic);
+    const mockCharacter = character();
+
+    mockCharacter.createCaracteristic(invalidMockCaracteristic);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Caracteristic',
@@ -179,7 +169,9 @@ describe('Character tests', () => {
     const invalidMockModifier = modifier;
     const strength = null;
     invalidMockModifier.strength = strength;
-    const mockCharacter = character(null, invalidMockModifier);
+    const mockCharacter = character();
+
+    mockCharacter.createModifier(invalidMockModifier);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Modifier',
@@ -197,7 +189,9 @@ describe('Character tests', () => {
     const invalidMockModifier = modifier;
     const strength = 0;
     invalidMockModifier.strength = strength;
-    const mockCharacter = character(null, invalidMockModifier);
+    const mockCharacter = character();
+
+    mockCharacter.createModifier(invalidMockModifier);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Modifier',
@@ -215,7 +209,9 @@ describe('Character tests', () => {
     const invalidMockModifier = modifier;
     const dexterity = null;
     invalidMockModifier.dexterity = dexterity;
-    const mockCharacter = character(null, invalidMockModifier);
+    const mockCharacter = character();
+
+    mockCharacter.createModifier(invalidMockModifier);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Modifier',
@@ -233,7 +229,9 @@ describe('Character tests', () => {
     const invalidMockModifier = modifier;
     const dexterity = 0;
     invalidMockModifier.dexterity = dexterity;
-    const mockCharacter = character(null, invalidMockModifier);
+    const mockCharacter = character();
+
+    mockCharacter.createModifier(invalidMockModifier);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Modifier',
@@ -251,7 +249,9 @@ describe('Character tests', () => {
     const invalidMockModifier = modifier;
     const constitution = null;
     invalidMockModifier.constitution = constitution;
-    const mockCharacter = character(null, invalidMockModifier);
+    const mockCharacter = character();
+
+    mockCharacter.createModifier(invalidMockModifier);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Modifier',
@@ -269,7 +269,9 @@ describe('Character tests', () => {
     const invalidMockModifier = modifier;
     const constitution = 0;
     invalidMockModifier.constitution = constitution;
-    const mockCharacter = character(null, invalidMockModifier);
+    const mockCharacter = character();
+
+    mockCharacter.createModifier(invalidMockModifier);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Modifier',
@@ -287,7 +289,9 @@ describe('Character tests', () => {
     const invalidMockModifier = modifier;
     const intelligence = null;
     invalidMockModifier.intelligence = intelligence;
-    const mockCharacter = character(null, invalidMockModifier);
+    const mockCharacter = character();
+
+    mockCharacter.createModifier(invalidMockModifier);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Modifier',
@@ -305,7 +309,9 @@ describe('Character tests', () => {
     const invalidMockModifier = modifier;
     const intelligence = 0;
     invalidMockModifier.intelligence = intelligence;
-    const mockCharacter = character(null, invalidMockModifier);
+    const mockCharacter = character();
+
+    mockCharacter.createModifier(invalidMockModifier);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Modifier',
@@ -323,7 +329,9 @@ describe('Character tests', () => {
     const invalidMockModifier = modifier;
     const wisdom = null;
     invalidMockModifier.wisdom = wisdom;
-    const mockCharacter = character(null, invalidMockModifier);
+    const mockCharacter = character();
+
+    mockCharacter.createModifier(invalidMockModifier);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Modifier',
@@ -339,7 +347,9 @@ describe('Character tests', () => {
     const invalidMockModifier = modifier;
     const wisdom = 0;
     invalidMockModifier.wisdom = wisdom;
-    const mockCharacter = character(null, invalidMockModifier);
+    const mockCharacter = character();
+
+    mockCharacter.createModifier(invalidMockModifier);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Modifier',
@@ -357,7 +367,9 @@ describe('Character tests', () => {
     const invalidMockModifier = modifier;
     const charisma = null;
     invalidMockModifier.charisma = charisma;
-    const mockCharacter = character(null, invalidMockModifier);
+    const mockCharacter = character();
+
+    mockCharacter.createModifier(invalidMockModifier);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Modifier',
@@ -375,7 +387,9 @@ describe('Character tests', () => {
     const invalidMockModifier = modifier;
     const charisma = 0;
     invalidMockModifier.charisma = charisma;
-    const mockCharacter = character(null, invalidMockModifier);
+    const mockCharacter = character();
+
+    mockCharacter.createModifier(invalidMockModifier);
 
     const validationEntity = mockCharacter.validationEntity.find(
       (x) => x.objectName === 'Modifier',
@@ -390,10 +404,11 @@ describe('Character tests', () => {
   });
 
   it('should current hit point is not be null', () => {
-    const mockCharacter = character(null, null);
+    const mockCharacter = character();
     const invalidClass = _class;
     invalidClass.hitDiceType = null;
     
+    mockCharacter.createModifier(modifier);
     mockCharacter.calculateHitPoints(_class);
 
     const validationEntity = mockCharacter.validationEntity.find(
@@ -412,10 +427,11 @@ describe('Character tests', () => {
     const invalidMockModifier = modifier;
     invalidMockModifier.constitution = 0;
 
-    const mockCharacter = character(null, invalidMockModifier);
+    const mockCharacter = character();
     const invalidClass = _class;
     invalidClass.hitDiceType = 0;
     
+    mockCharacter.createModifier(invalidMockModifier);
     mockCharacter.calculateHitPoints(_class);
 
     const validationEntity = mockCharacter.validationEntity.find(
@@ -431,10 +447,11 @@ describe('Character tests', () => {
   });
 
   it('should max hit point is not be null', () => {
-    const mockCharacter = character(null, null);
+    const mockCharacter = character();
     const invalidClass = _class;
     invalidClass.hitDiceType = null;
     
+    mockCharacter.createModifier(modifier);
     mockCharacter.calculateHitPoints(_class);
 
     const validationEntity = mockCharacter.validationEntity.find(
@@ -453,10 +470,11 @@ describe('Character tests', () => {
     const invalidMockModifier = modifier;
     invalidMockModifier.constitution = 0;
 
-    const mockCharacter = character(null, invalidMockModifier);
+    const mockCharacter = character();
     const invalidClass = _class;
     invalidClass.hitDiceType = 0;
     
+    mockCharacter.createModifier(invalidMockModifier);
     mockCharacter.calculateHitPoints(_class);
 
     const validationEntity = mockCharacter.validationEntity.find(
